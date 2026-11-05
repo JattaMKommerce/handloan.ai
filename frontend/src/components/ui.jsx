@@ -2,7 +2,7 @@ import EnquiryForm from './ContactForm.jsx'
 import Icon from './Icon.jsx'
 import { images } from '../config/images.js'
 import { representativeExample, site } from '../config/site.js'
-import { ageRange, appExternal, appHref, appLabel, eligibilityLine, facts, verifiedLenders } from '../lib/derived.js'
+import { ageRange, appApk, appHref, appLabel, appLinkProps, eligibilityLine, facts, verifiedLenders } from '../lib/derived.js'
 import { emi, pct, representative, rupees } from '../lib/loan.js'
 
 export function Img({ name, className = '', eager = false }) {
@@ -51,7 +51,7 @@ export function SectionHead({ eyebrow, title, children, center = false }) {
 
 export function AppButton({ className = 'btn btn--primary', children = appLabel }) {
   return (
-    <a className={className} href={appHref} {...(appExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+    <a className={className} href={appHref} {...appLinkProps}>
       <Icon name="smartphone" size={18} /> {children}
     </a>
   )
@@ -358,7 +358,7 @@ export function AppCta() {
         <div className="app-cta">
           <div className="app-cta__text">
             <p className="eyebrow eyebrow--light">
-              {site.app.playStoreUrl ? `Download the ${site.brand} app` : 'Start your loan enquiry'}
+              {site.app.playStoreUrl || appApk ? `Download the ${site.brand} app` : 'Start your loan enquiry'}
             </p>
             <h2>Ready to experience the difference?</h2>
             <p>
@@ -367,7 +367,7 @@ export function AppCta() {
             </p>
             <div className="btn-row">
               <AppButton className="btn btn--white">
-                {site.app.playStoreUrl ? 'Get it on Google Play' : 'Start your enquiry'}
+                {site.app.playStoreUrl ? 'Get it on Google Play' : appApk ? 'Download for Android' : 'Start your enquiry'}
               </AppButton>
               <a className="btn btn--ghost-light" href="/emi-calculator/">
                 <Icon name="calculator" size={18} /> Calculate your EMI
@@ -377,6 +377,13 @@ export function AppCta() {
               Available to {eligibilityLine}. {site.brand} accepts enquiries only from age {ageRange}. Any loan would
               be subject to a lender&apos;s credit assessment.
             </p>
+            {appApk ? (
+              <p className="app-cta__fine">
+                Android app, version {appApk.version} ({appApk.size}). Download it only from {site.brand}. The app is not
+                on Google Play yet, so your phone may ask you to allow the install.{' '}
+                <span className="app-cta__hash">SHA-256: {appApk.sha256}</span>
+              </p>
+            ) : null}
           </div>
           <div className="app-cta__phone" aria-hidden="true">
             <div className="phone">

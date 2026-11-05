@@ -6,10 +6,20 @@ export const whatsappHref = `https://wa.me/${site.contact.whatsapp}?text=${encod
   'Hi HandLoan.ai, I would like to know more about your loans.',
 )}`
 
-/** No app on Play Store yet → app buttons become "Start Enquiry" and open the enquiry form. */
-export const appHref = site.app.playStoreUrl || '/contact/#enquiry'
+/**
+ * App buttons: Google Play link if set; otherwise the direct APK download if set;
+ * otherwise "Start Enquiry", which opens the enquiry form.
+ */
+export const appApk = !site.app.playStoreUrl && site.app.apk?.url ? site.app.apk : null
+export const appHref = site.app.playStoreUrl || appApk?.url || '/contact/#enquiry'
 export const appExternal = Boolean(site.app.playStoreUrl)
-export const appLabel = site.app.playStoreUrl ? 'Get the App' : 'Start Enquiry'
+export const appLabel = site.app.playStoreUrl ? 'Get the App' : appApk ? 'Download App' : 'Start Enquiry'
+/** Extra <a> attributes for app buttons (new tab for Play Store, download for the APK). */
+export const appLinkProps = appExternal
+  ? { target: '_blank', rel: 'noopener noreferrer' }
+  : appApk
+    ? { download: `HandLoan-${appApk.version}.apk` }
+    : {}
 
 const e = site.eligibility
 /** "Indian residents aged 21 to 58 with a monthly income of ₹15,000 or more" */

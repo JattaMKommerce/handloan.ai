@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Icon from './Icon.jsx'
 import { site } from '../config/site.js'
-import { PARTNER_LINE, appExternal, appHref, appLabel, whatsappHref as WHATSAPP } from '../lib/derived.js'
+import { PARTNER_LINE, appHref, appLabel, appLinkProps, whatsappHref as WHATSAPP } from '../lib/derived.js'
 
 const BOT = site.chatbot
 
@@ -193,7 +193,7 @@ export default function Assistant() {
             <a className="assistant__action" href="/emi-calculator/">
               <Icon name="calculator" size={18} /> Calculate your EMI
             </a>
-            <a className="assistant__action" href={appHref} {...(appExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+            <a className="assistant__action" href={appHref} {...appLinkProps}>
               <Icon name="smartphone" size={18} /> {appLabel}
             </a>
           </div>

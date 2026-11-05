@@ -1250,6 +1250,9 @@ sup {
   color: #a9bbd8;
   font-size: 0.9rem;
 }
+.app-cta__hash {
+  overflow-wrap: anywhere;
+}
 .app-cta__phone {
   display: none;
 }

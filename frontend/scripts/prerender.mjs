@@ -116,7 +116,7 @@ if (todos.size || blockers.length) {
   console.log('  ✅ No TODO placeholders found — content is complete.\n')
 }
 if (notes.length) {
-  console.log('  ℹ  Current settings (expected while there is no lending partner):\n')
+  console.log('  ℹ  Current settings and reminders:\n')
   for (const w of notes) console.log(`   • ${w}`)
   console.log('')
 }

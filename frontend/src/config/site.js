@@ -84,10 +84,19 @@ export const site = {
   },
 
   app: {
-    // Google Play listing URL. Leave '' until the app is live on Play Store.
-    // While empty, "Get the App" buttons become "Start Enquiry" and open the enquiry form.
-    // Do NOT link to a direct .apk download — Meta and RBI both treat that as a red flag.
+    // Google Play listing URL. Leave '' until the app is live on Play Store. When set, it wins over `apk`.
     playStoreUrl: '',
+    // Direct Android download (added for testing, 5 November 2026).
+    // ⚠ Meta and RBI treat direct APK downloads of financial apps as a red flag — see COMPLIANCE_REPORT.md.
+    // The file lives in public/apk/ and is NOT in git (it is over GitHub's 100 MB limit): upload it to
+    // public_html/apk/ on Hostinger yourself. Set url to '' to switch the download off — the app buttons
+    // then go back to "Start Enquiry" and open the enquiry form.
+    apk: {
+      url: '/apk/app-2.1.4.apk',
+      version: '2.1.4',
+      size: '123 MB',
+      sha256: '10f39d84eaf8d7d36169375ee5faf957a87594ca67a05a44f8bcf6b7e2c2cfde',
+    },
   },
 
   // Enquiries are accepted only from people who meet all three.
@@ -274,7 +283,9 @@ export function configWarnings() {
   if (shown.some((p) => !p.legalName))
     w.push('lendingPartners: registered company name missing for: ' + shown.filter((p) => !p.legalName).map((p) => p.brandName).join(', '))
   if (products.verified && !products.processingFee) w.push('BLOCKER: products.verified is true but products.processingFee is empty')
-  if (!site.app.playStoreUrl) w.push('site.app.playStoreUrl is empty — "Get the App" buttons read "Start Enquiry" and open the enquiry form')
+  if (!site.app.playStoreUrl && site.app.apk?.url)
+    w.push(`site.app.apk: direct APK download is ON (${site.app.apk.url}) — Meta/RBI red flag; upload the file to public_html/apk/ separately`)
+  else if (!site.app.playStoreUrl) w.push('site.app.playStoreUrl is empty — "Get the App" buttons read "Start Enquiry" and open the enquiry form')
   if (site.chatbot.iframeSrc)
     w.push(
       'chatbot: iamkratu chat opens in an iframe — after deploying, send one test message on the live site (and try it on a phone) before running ads',

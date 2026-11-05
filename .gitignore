@@ -2,6 +2,8 @@ node_modules/
 dist/
 dist-ssr/
 *.zip
+# App installers are too big for GitHub (100 MB limit) — upload to Hostinger separately
+*.apk
 *.log
 .env
 .env.*

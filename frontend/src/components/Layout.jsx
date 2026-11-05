@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Assistant from './Assistant.jsx'
 import Icon from './Icon.jsx'
 import { site } from '../config/site.js'
-import { PARTNER_LINE, YEAR, appExternal, appHref, appLabel, whatsappHref } from '../lib/derived.js'
+import { PARTNER_LINE, YEAR, appHref, appLabel, appLinkProps, whatsappHref } from '../lib/derived.js'
 
 const NAV = [
   { href: '/', label: 'Home' },
@@ -85,7 +85,7 @@ function Header({ path }) {
           <a
             className="btn btn--primary nav__cta"
             href={appHref}
-            {...(appExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            {...appLinkProps}
           >
             <Icon name="smartphone" size={18} /> {appLabel}
           </a>
