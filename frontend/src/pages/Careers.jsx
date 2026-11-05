@@ -5,7 +5,7 @@ import { site } from '../config/site.js'
 const CULTURE = [
   ['heart', 'Customer First', 'We obsess over user experience. Every line of code, design and strategy starts with the customer’s needs.'],
   ['eye', 'Radical Transparency', 'Honest communication, constructive feedback and shared knowledge are part of how we work.'],
-  ['bulb', 'Innovation with Purpose', 'We use technology like AI and the ONDC network to solve real-world problems.'],
+  ['bulb', 'Innovation with Purpose', 'We use technology like AI to solve real-world problems.'],
   ['shield', 'Integrity & Security', 'We build with trust, holding ourselves to high standards of security and ethics.'],
 ]
 

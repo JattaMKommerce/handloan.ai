@@ -6,23 +6,23 @@ export const routes = [
   {
     path: '/',
     page: 'home',
-    title: 'HandLoan.ai — Personal & Business Loans from RBI-Regulated Lenders',
+    title: 'Personal & Business Loan Enquiry - HandLoan.ai is not a lender',
     description:
-      'Apply digitally for personal and business loans offered by RBI-regulated banks and NBFCs. Compare offers, review the APR and charges in the Key Facts Statement, and borrow with clarity. HandLoan.ai is a loan facilitation platform, not a lender.',
+      'Start a personal or business loan enquiry digitally with HandLoan.ai and its lending partners. HandLoan.ai is a loan facilitation platform, not a lender.',
   },
   {
     path: '/about/',
     page: 'about',
     title: 'About Us — HandLoan.ai',
     description:
-      'HandLoan.ai is a digital loan facilitation platform by Jatta M Kommerce Private Limited, connecting borrowers with RBI-regulated lenders through a transparent, paperless process.',
+      'HandLoan.ai is a digital loan facilitation platform by Jatta M Kommerce Private Limited (CIN U58200MH2024PTC428411). We are not a lender; loans are offered by our listed lending partners.',
   },
   {
     path: '/services/',
     page: 'services',
     title: 'Personal Loans & Business Loans — HandLoan.ai',
     description:
-      'Loan amounts, tenures, interest rates, eligibility and documents for personal and business loans offered by our RBI-regulated lending partners.',
+      'Learn about loan amounts, tenures, interest rates, eligibility and documents for personal and business loans. The lending partner sets these and shows them in its Key Facts Statement.',
   },
   {
     path: '/emi-calculator/',
@@ -34,9 +34,9 @@ export const routes = [
   {
     path: '/lending-partners/',
     page: 'partners',
-    title: 'Our Lending Partners — HandLoan.ai',
+    title: 'Lending Partners — HandLoan.ai',
     description:
-      'The RBI-regulated banks and NBFCs HandLoan.ai works with as a Lending Service Provider, with registration details and grievance contacts.',
+      'The lending partners HandLoan.ai works with, including L&T Finance, Aditya Birla Capital, Bajaj Finance, DMI Finance, Karnataka Bank, Respo Financial Capital (Zype), Fibe, FlexiLoans and GROx (MyShubhLife).',
   },
   {
     path: '/faq/',
@@ -55,7 +55,7 @@ export const routes = [
     path: '/contact/',
     page: 'contact',
     title: 'Contact Us — HandLoan.ai',
-    description: 'Reach HandLoan.ai support by phone, email or WhatsApp, or visit our offices.',
+    description: 'Send a loan enquiry or reach HandLoan.ai support by phone, email or WhatsApp, Monday to Saturday, 9:30 AM – 6:30 PM IST.',
   },
   {
     path: '/grievance-redressal/',

@@ -137,7 +137,7 @@ export default function EmiCalculator({ compact = false }) {
         </div>
         <p className="calc__note">
           Estimate only, based on a reducing-balance rate. It excludes processing fees, GST and other lender charges,
-          and is not a loan offer. Your actual EMI and APR are shown in the lender&apos;s Key Facts Statement.
+          and is not a loan offer. Any actual EMI and APR would be shown in a lender&apos;s Key Facts Statement.
         </p>
       </div>
 

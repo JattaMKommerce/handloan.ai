@@ -67,7 +67,10 @@ function head(route) {
 const todos = new Map()
 for (const route of routes) {
   const appHtml = render(route)
-  const html = template.replace('<!--app-head-->', head(route)).replace('<!--app-html-->', appHtml)
+  const html = template
+    .replace('<!--app-head-->', head(route))
+    .replace('<div id="root">', `<div id="root" data-page="${route.page}">`)
+    .replace('<!--app-html-->', appHtml)
 
   const out =
     route.path === '/'
@@ -101,11 +104,19 @@ fs.rmSync(ssrDir, { recursive: true, force: true })
 console.log(`\n  ${routes.length} pages pre-rendered + sitemap.xml\n`)
 
 const warnings = configWarnings()
-if (todos.size || warnings.length) {
-  console.log('  ⚠  NOT READY FOR META ADS — fill these in src/config/site.js:\n')
+const blockers = warnings.filter((w) => w.startsWith('BLOCKER'))
+const notes = warnings.filter((w) => !w.startsWith('BLOCKER'))
+if (todos.size || blockers.length) {
+  console.log('  ⚠  NOT READY FOR META ADS — fix these in src/config/site.js:\n')
   for (const [label, pages] of todos) console.log(`   • [TODO] ${label}\n       on: ${[...pages].join(', ')}`)
-  for (const w of warnings) console.log(`   • ${w}`)
+  for (const w of blockers) console.log(`   • ${w}`)
   console.log('')
+  process.exitCode = 1
 } else {
   console.log('  ✅ No TODO placeholders found — content is complete.\n')
+}
+if (notes.length) {
+  console.log('  ℹ  Current settings (expected while there is no lending partner):\n')
+  for (const w of notes) console.log(`   • ${w}`)
+  console.log('')
 }

@@ -1,10 +1,11 @@
 import ContactForm from '../components/ContactForm.jsx'
 import Icon from '../components/Icon.jsx'
-import { Img, PageHero } from '../components/ui.jsx'
+import { EnquiryBox, Img, PageHero } from '../components/ui.jsx'
 import { site } from '../config/site.js'
 
 export default function Contact() {
   const c = site.company
+  const g = site.grievance
   const cards = [
     { icon: 'phone', title: 'Call us', body: <a href={`tel:${site.contact.phoneHref}`}>{site.contact.phoneDisplay}</a> },
     { icon: 'mail', title: 'Email us', body: <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a> },
@@ -13,7 +14,7 @@ export default function Contact() {
       title: 'WhatsApp',
       body: (
         <a href={`https://wa.me/${site.contact.whatsapp}`} target="_blank" rel="noopener noreferrer">
-          Chat with us
+          {site.contact.phoneDisplay}
         </a>
       ),
     },
@@ -22,7 +23,7 @@ export default function Contact() {
   return (
     <>
       <PageHero crumbs="Contact Us" eyebrow="We're here to help" title="Contact us">
-        Questions about the app, your application or our services? Reach out — our team will get back to you.
+        Questions about a loan enquiry or our services? Reach out — our team will get back to you during support hours.
       </PageHero>
 
       <section className="section">
@@ -39,37 +40,43 @@ export default function Contact() {
         </div>
       </section>
 
-      <section className="section section--tint">
+      <section className="section section--tint" id="enquiry">
         <div className="container split split--top">
           <div>
-            <h2>Send us a message</h2>
-            <p className="muted">Tell us how we can help and our team will get back to you.</p>
-            <ContactForm />
+            <h2>Send us an enquiry</h2>
+            <p className="muted">
+              Tell us what you need. We use the details you enter only to respond to your enquiry, and share it with a
+              listed lending partner only with your consent; see our <a href="/privacy-policy/">Privacy Policy</a>.
+            </p>
+            <ContactForm variant="contact" />
           </div>
           <div>
             <div className="split__media">
               <Img name="contact" className="rounded-img" />
             </div>
             <div className="panel mt-2">
-              <h3><Icon name="mapPin" size={20} /> Registered office</h3>
+              <h3><Icon name="building" size={20} /> Company</h3>
               <p>
                 {c.legalName}
                 <br />
-                {c.registeredOffice}
+                <span className="muted small">CIN: {c.cin}</span>
               </p>
-              {c.branchOffice ? (
-                <>
-                  <h3><Icon name="building" size={20} /> Branch office</h3>
-                  <p>{c.branchOffice}</p>
-                </>
-              ) : null}
+              <h3><Icon name="mapPin" size={20} /> Registered office</h3>
+              <p>{c.registeredOffice}</p>
+              <h3><Icon name="mapPin" size={20} /> Operating office</h3>
+              <p>{c.operatingOffice}</p>
             </div>
             <div className="panel mt-2">
               <h3><Icon name="message" size={20} /> Have a complaint?</h3>
               <p>
-                See our <a href="/grievance-redressal/">Grievance Redressal</a> page to reach our Grievance Officer or
-                escalate a complaint about a loan.
+                Grievance Officer: {g.name},{' '}
+                <a href={`mailto:${g.email}`}>{g.email}</a>, <a href={`tel:${g.phoneHref}`}>{g.phoneDisplay}</a>. See our{' '}
+                <a href="/grievance-redressal/">Grievance Redressal</a> page for response times, the complaint form and
+                how to escalate.
               </p>
+            </div>
+            <div className="mt-2">
+              <EnquiryBox />
             </div>
           </div>
         </div>

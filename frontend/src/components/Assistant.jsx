@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Icon from './Icon.jsx'
 import { site } from '../config/site.js'
-import { appExternal, appHref, whatsappHref as WHATSAPP } from '../lib/derived.js'
+import { PARTNER_LINE, appExternal, appHref, appLabel, whatsappHref as WHATSAPP } from '../lib/derived.js'
 
 const BOT = site.chatbot
 
@@ -13,10 +13,10 @@ const BOT = site.chatbot
  */
 const MESSAGES = [
   { text: 'Hi there! 👋 Welcome to HandLoan.ai', chat: true },
-  { text: 'Looking for a personal or business loan? Let’s find the right option for you.', href: '/services/' },
-  { text: 'One application, offers from RBI-regulated lenders ✅', href: '/services/' },
+  { text: 'Looking for a personal or business loan? Let us explain your options.', href: '/services/' },
+  { text: 'Start a loan enquiry online — no PAN or Aadhaar needed ✅', href: '/contact/#enquiry' },
   { text: 'Plan ahead — check your EMI before you apply 🧮', href: '/emi-calculator/' },
-  { text: 'No fee from HandLoan.ai. Lender charges are shown upfront 🙌', href: '/faq/' },
+  { text: 'No fee from HandLoan.ai for your enquiry. Never pay anyone upfront 🙌', href: '/faq/' },
   { text: 'Have a question? Tap here to chat with me 💬', chat: true },
   { text: 'Prefer WhatsApp? We’re there too 📱', href: WHATSAPP, external: true },
 ]
@@ -156,6 +156,15 @@ export default function Assistant() {
               onLoad={() => setFrameReady(true)}
             />
           </div>
+          <p className="assistant__chat-note">
+            <strong>AI assistant</strong> · It can&apos;t approve loans or make lending decisions. {site.brand} is not a
+            lender.
+            Talk to a person:{' '}
+            <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
+              WhatsApp
+            </a>{' '}
+            · <a href={`tel:${site.contact.phoneHref}`}>Call</a>
+          </p>
         </div>
       ) : null}
 
@@ -185,11 +194,11 @@ export default function Assistant() {
               <Icon name="calculator" size={18} /> Calculate your EMI
             </a>
             <a className="assistant__action" href={appHref} {...(appExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
-              <Icon name="smartphone" size={18} /> Get the app
+              <Icon name="smartphone" size={18} /> {appLabel}
             </a>
           </div>
           <p className="assistant__fine">
-            {site.brand} is not a lender. Loans are offered by RBI-regulated lenders, subject to their approval.
+            {site.brand} is not a lender. {PARTNER_LINE}
           </p>
         </div>
       ) : null}

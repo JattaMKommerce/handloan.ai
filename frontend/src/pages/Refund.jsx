@@ -1,4 +1,4 @@
-import LegalLayout, { KV } from '../components/LegalLayout.jsx'
+import LegalLayout, { CompanyBlock, GrievanceBlock, KV } from '../components/LegalLayout.jsx'
 import { site } from '../config/site.js'
 
 export default function Refund() {
@@ -8,70 +8,63 @@ export default function Refund() {
     <LegalLayout title="Refund & Cancellation Policy">
       <h2>1. What this policy covers</h2>
       <p>
-        This policy explains how to withdraw an application, report a payment issue involving HandLoan.ai, or contact
-        the lender about a disbursed loan. HandLoan.ai is operated by <strong>{site.company.legalName}</strong>.
+        This policy explains how to withdraw an enquiry, what to do if anyone has asked you for a payment in
+        HandLoan.ai&apos;s name, and how cancellation works for a digital loan from a lender. HandLoan.ai is operated by{' '}
+        <strong>{site.company.legalName}</strong> (CIN {site.company.cin}). HandLoan.ai is a loan facilitation
+        platform, not a lender, and works with the lending partners listed on our Lending Partners page.
       </p>
 
-      <h2>2. LSP fees and lender charges</h2>
+      <h2>2. Fees</h2>
       <p>
-        Where HandLoan acts as a Lending Service Provider for a regulated lender, the lender pays HandLoan for its LSP
-        services. HandLoan does not charge borrowers for those services.
+        HandLoan.ai does not charge you any fee for submitting an enquiry and does not accept payments from borrowers.
+        Never pay anyone an upfront fee. Because HandLoan.ai takes no fee, there is nothing for HandLoan.ai to refund
+        for an enquiry.
       </p>
       <p>
-        Any applicable fee charged by the lender is disclosed in the lender&apos;s offer documents and KFS where
-        required. Direct questions about a lender charge to the lender identified on your receipt, KFS, or loan
-        agreement. HandLoan can help you locate the relevant contact.
+        Any fee charged by a lending partner is disclosed in the lender&apos;s offer documents and Key Facts Statement
+        (KFS) before you accept, and questions about it should be directed to the lender.
       </p>
 
-      <h2>3. Withdrawing an application before disbursement</h2>
+      <h2>3. Withdrawing your enquiry</h2>
       <p>
-        To request withdrawal before disbursement, email <a href={`mailto:${c.email}`}><strong>{c.email}</strong></a>{' '}
-        with your application reference. If the lender already has the application, contact the lender through its
-        official support channel as well. The lender can confirm whether processing has stopped or funds have already
-        been released. Withdrawal does not override any legal obligation to retain records.
+        You can withdraw your enquiry at any time by emailing <a href={`mailto:${c.email}`}><strong>{c.email}</strong></a>{' '}
+        or calling <a href={`tel:${c.phoneHref}`}><strong>{c.phoneDisplay}</strong></a>. We will stop contacting you
+        about it and, if you ask, delete your details, subject to any records we must keep by law. If your enquiry has
+        already been shared with a lending partner (with your consent), contact that lender too; we will help you find
+        the right contact.
       </p>
 
       <h2>4. Exiting a digital loan after disbursement</h2>
       <p>
-        Contact the lender promptly if you want to exit during the applicable cooling-off period. Your KFS and loan
-        documents explain the period, the amount payable, and how to exercise that right. During the applicable period,
-        you may exit by paying the principal and the proportionate cost calculated using the APR, without a penalty.
-        The lender may retain a reasonable one-time processing fee where permitted and disclosed upfront. After the
-        cooling-off period, the lender&apos;s applicable prepayment and closure rules apply.
+        If you take a digital loan from an RBI-regulated lender, contact that lender promptly if you want to exit during
+        the applicable cooling-off period. The lender&apos;s KFS and loan documents explain the period, the amount
+        payable, and how to exercise that right. During the applicable period, you may exit by paying the principal and
+        the proportionate cost calculated using the APR, without a penalty. The lender may retain a reasonable one-time
+        processing fee where permitted and disclosed upfront. After the cooling-off period, the lender&apos;s applicable
+        prepayment and closure rules apply.
       </p>
 
-      <h2>5. Duplicate, excess, or erroneous payments</h2>
+      <h2>5. Payments made to anyone in HandLoan.ai&apos;s name</h2>
       <p>
-        If a payment made to HandLoan appears duplicate, excessive, or incorrect, email{' '}
-        <a href={`mailto:${c.email}`}><strong>{c.email}</strong></a> with the transaction reference, payment date,
-        amount, and a short description of the issue. Please report it promptly. Keep your OTP, UPI PIN, and full card
-        details private.
-      </p>
-      <p>
-        We will review the transaction and notify you of the outcome. If a refund is due, we will initiate it to the
-        original payment method within <strong>{site.legal.refundWorkingDays} working days</strong> after confirming
-        eligibility and provide a reference where available. Your bank or payment provider may take additional time to
-        reflect the credit.
+        HandLoan.ai never asks for money, OTP, UPI PIN, CVV or documents. If you have paid, or been asked to pay, anyone
+        claiming to be HandLoan.ai or a HandLoan.ai partner lender, it was not authorised by us. Report it straight away
+        to <a href={`mailto:${g.email}`}><strong>{g.email}</strong></a> and{' '}
+        <a href={`mailto:${c.email}`}><strong>{c.email}</strong></a>, contact your bank or payment provider, and report
+        it at <a href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer">cybercrime.gov.in</a> or
+        call <strong>1930</strong>. We will cooperate with your bank and with lawful requests from the authorities.
       </p>
 
-      <h2>6. Unauthorised payments and disputes</h2>
-      <p>
-        If you suspect an unauthorised payment, contact your bank or payment provider promptly and notify HandLoan if
-        the transaction involves our platform. We will review our records and cooperate with lawful requests relating
-        to the dispute. You may use the complaint, payment dispute, and statutory remedies available to you.
-      </p>
-
-      <h2>7. Contact and escalation</h2>
+      <h2>6. Contact and escalation</h2>
       <KV
         rows={[
-          ['Email', c.email],
-          ['Phone', c.phoneDisplay],
-          ['Grievance escalation', `${g.name} · ${g.email} · ${g.phone}`],
+          ['Customer support', `${c.email} · ${c.phoneDisplay} · ${c.hours}`],
         ]}
       />
+      <GrievanceBlock label="Grievance Officer" />
+      <CompanyBlock />
       <p>
-        For lender complaints, use the contact in the lender&apos;s KFS or on its official website. Eligible unresolved
-        lender complaints may be escalated through the{' '}
+        For complaints about a loan from a lender, use the contact in the lender&apos;s KFS or on its official website.
+        Eligible unresolved lender complaints may be escalated after {g.lenderResolution} through the{' '}
         <a href="https://cms.rbi.org.in/" target="_blank" rel="noopener noreferrer">RBI Complaint Management System</a>{' '}
         under the applicable scheme.
       </p>

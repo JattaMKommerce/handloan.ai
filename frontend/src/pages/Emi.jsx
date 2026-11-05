@@ -5,7 +5,7 @@ export default function Emi() {
   return (
     <>
       <PageHero crumbs="EMI Calculator" eyebrow="Plan smarter" title="EMI Calculator">
-        Estimate your monthly instalment, total interest and total amount payable before you apply.
+        Estimate your monthly instalment, total interest and total amount payable before you borrow. The calculator runs only in your browser.
       </PageHero>
 
       <section className="section">

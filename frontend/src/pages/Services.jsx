@@ -1,6 +1,8 @@
 import Icon from '../components/Icon.jsx'
 import {
   AppButton,
+  EnquiryBox,
+  EnquirySection,
   FaqList,
   Img,
   LenderNotice,
@@ -10,7 +12,8 @@ import {
 } from '../components/ui.jsx'
 import { faqs } from '../config/faqs.jsx'
 import { products, site } from '../config/site.js'
-import { pct, rupeesShort } from '../lib/loan.js'
+import { decisionTime, processingFee, rateRange } from '../lib/derived.js'
+import { rupeesShort } from '../lib/loan.js'
 
 function Product({ p, image, intro, uses, eligibility, notEligible, documents, reverse }) {
   return (
@@ -32,14 +35,14 @@ function Product({ p, image, intro, uses, eligibility, notEligible, documents, r
           <dl className="quick">
             <div><dt><Icon name="rupee" size={18} /> Loan amount</dt><dd>{rupeesShort(p.amountMin)} – {rupeesShort(p.amountMax)}</dd></div>
             <div><dt><Icon name="calendar" size={18} /> Tenure</dt><dd>{p.tenureMinMonths} – {p.tenureMaxMonths} months</dd></div>
-            <div><dt><Icon name="percent" size={18} /> Interest rate</dt><dd>{pct(p.rateMin)} – {pct(p.rateMax)} p.a.</dd></div>
-            <div><dt><Icon name="clock" size={18} /> Decision time</dt><dd>{p.decisionTime}</dd></div>
+            <div><dt><Icon name="percent" size={18} /> Interest rate</dt><dd>{rateRange(p)}</dd></div>
+            <div><dt><Icon name="clock" size={18} /> Decision time</dt><dd>{decisionTime(p)}</dd></div>
           </dl>
         </div>
       </div>
 
       <div className={`container cards cards--2 mt-3`}>
-        <div className="panel">
+        <div className="panel" id={`${p.key}-eligibility`}>
           <h3><Icon name="user" size={20} /> Typical eligibility</h3>
           <ul className="checklist">
             {eligibility.map((e) => (
@@ -47,7 +50,11 @@ function Product({ p, image, intro, uses, eligibility, notEligible, documents, r
             ))}
           </ul>
           {notEligible ? <p className="muted small">{notEligible}</p> : null}
-          <p className="muted small">Final eligibility, amount and rate are decided by the lender.</p>
+          <p className="muted small">
+            {site.brand} accepts enquiries only from Indian residents aged {site.eligibility.ageMin} to{' '}
+            {site.eligibility.ageMax} with a monthly income of {site.eligibility.minMonthlyIncome} or more. Final
+            eligibility, amount and rate are decided by the lending partner.
+          </p>
         </div>
         <div className="panel">
           <h3><Icon name="file" size={20} /> Documents the lender may ask for</h3>
@@ -56,7 +63,10 @@ function Product({ p, image, intro, uses, eligibility, notEligible, documents, r
               <li key={d}>{d}</li>
             ))}
           </ul>
-          <p className="muted small">Documents are shared digitally, with your consent, only with the lender handling your application.</p>
+          <p className="muted small">
+            {site.brand} does not ask for these documents. The lending partner may ask for them at its own step, only
+            with your consent.
+          </p>
         </div>
       </div>
     </section>
@@ -69,13 +79,16 @@ export default function Services() {
   return (
     <>
       <PageHero crumbs="Services" eyebrow="Our services" title="Personal loans & business loans">
-        Apply digitally for loans offered by RBI-regulated banks and NBFCs. Compare offers and review every charge
-        before you accept.
+        We help you start a loan enquiry with our lending partners. Understand loan options, then review the
+        lender&apos;s offer and every charge in its Key Facts Statement before you decide.
       </PageHero>
 
       <section className="section section--slim">
         <div className="container">
           <LenderNotice />
+          <div className="mt-2">
+            <EnquiryBox />
+          </div>
         </div>
       </section>
 
@@ -92,9 +105,9 @@ export default function Services() {
           'Consolidating existing loans into one EMI',
         ]}
         eligibility={[
-          'Indian resident, typically aged 21 to 60 years',
+          'Indian resident aged 21 to 58',
           'Salaried or self-employed with a regular income',
-          'Minimum monthly income usually ₹20,000–₹25,000 (varies by lender and city)',
+          'Monthly income of ₹15,000 or more',
           'Credit score generally 750 or above',
           'Salaried: usually 6+ months with current employer and 2+ years total experience',
           'Existing EMIs ideally below 40–50% of monthly income',
@@ -121,6 +134,7 @@ export default function Services() {
           'Marketing and growth initiatives',
         ]}
         eligibility={[
+          'Indian resident aged 21 to 58, with a monthly income of ₹15,000 or more',
           'Business operating for at least 12 months',
           'Proprietorships, partnerships, self-employed professionals (doctors, CAs and others), gig workers and self-help groups',
           'Credit score typically 650 or above; some lenders consider new-to-credit applicants',
@@ -139,8 +153,8 @@ export default function Services() {
       <section className="section">
         <div className="container">
           <SectionHead center eyebrow="Rates & charges" title="Transparent pricing">
-            All loans are priced by the lender. Here is what to expect — the exact figures for your loan are in the
-            Key Facts Statement.
+            {site.brand} does not set loan prices. Learn about loan amounts, tenures, interest rates and charges. The
+            lending partner sets these and shows them in its Key Facts Statement.
           </SectionHead>
           <div className="table-wrap">
             <table className="table table--pricing">
@@ -154,8 +168,8 @@ export default function Services() {
               <tbody>
                 <tr>
                   <th scope="row">Interest rate (reducing balance)</th>
-                  <td>{pct(p.rateMin)} – {pct(p.rateMax)} p.a.</td>
-                  <td>{pct(b.rateMin)} – {pct(b.rateMax)} p.a.</td>
+                  <td>{rateRange(p)}</td>
+                  <td>{rateRange(b)}</td>
                 </tr>
                 <tr>
                   <th scope="row">Loan amount</th>
@@ -169,7 +183,11 @@ export default function Services() {
                 </tr>
                 <tr>
                   <th scope="row">Processing fee (charged by lender)</th>
-                  <td colSpan={2}>{products.processingFee}</td>
+                  <td colSpan={2}>{processingFee()}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Repayment frequency</th>
+                  <td colSpan={2}>{products.repayment}</td>
                 </tr>
                 <tr>
                   <th scope="row">Annual Percentage Rate (APR)</th>
@@ -183,9 +201,15 @@ export default function Services() {
                   <th scope="row">Prepayment / foreclosure</th>
                   <td colSpan={2}>As per the lender&apos;s policy, stated in the KFS</td>
                 </tr>
+                <tr>
+                  <th scope="row">Lender responsible for the loan</th>
+                  <td colSpan={2}>
+                    The lending partner named in your offer and KFS (see <a href="/lending-partners/">Lending Partners</a>)
+                  </td>
+                </tr>
                 <tr className="table__highlight">
                   <th scope="row">{site.brand} fee to borrower</th>
-                  <td colSpan={2}><strong>Nil</strong> — we never charge borrowers or ask for upfront payments</td>
+                  <td colSpan={2}><strong>Nil</strong> — no fee for submitting an enquiry; never pay anyone an upfront fee</td>
                 </tr>
               </tbody>
             </table>
@@ -199,7 +223,7 @@ export default function Services() {
       <section className="section section--tint">
         <div className="container cta-inline">
           <div>
-            <h2>Know your EMI before you apply</h2>
+            <h2>Know your EMI before you borrow</h2>
             <p>Use our EMI calculator to plan a repayment that fits your budget.</p>
           </div>
           <div className="btn-row">
@@ -211,9 +235,11 @@ export default function Services() {
         </div>
       </section>
 
-      <section className="section">
+      <EnquirySection tint={false} />
+
+      <section className="section section--tint">
         <div className="container narrow">
-          <SectionHead center eyebrow="FAQs" title="Common questions about our loans" />
+          <SectionHead center eyebrow="FAQs" title="Common questions about loans" />
           <FaqList items={faqs.filter((f) => /tenure|interest|charge|eligib|apply|KFS|repay|miss/i.test(f.q))} />
         </div>
       </section>

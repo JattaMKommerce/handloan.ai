@@ -3,6 +3,7 @@ import Icon from '../components/Icon.jsx'
 import EmiCalculator from '../components/EmiCalculator.jsx'
 import {
   AppCta,
+  EnquirySection,
   FaqList,
   FraudNotice,
   Img,
@@ -13,19 +14,20 @@ import {
 } from '../components/ui.jsx'
 import { faqs } from '../config/faqs.jsx'
 import { products, site } from '../config/site.js'
+import { ratesVerified } from '../lib/derived.js'
 import { pct, rupeesShort } from '../lib/loan.js'
 
 const SLIDES = [
   {
-    eyebrow: 'Personal & Business Loans',
-    title: 'Personalised loan offers. One simple digital application.',
-    text: 'Apply online, compare offers from RBI-regulated lending partners and review every rate and charge before you accept — from application to disbursement, without the bank queue.',
+    eyebrow: 'Personal & Business Loan Enquiry',
+    title: 'Explore personal and business loan options.',
+    text: 'We help you start a loan enquiry with our lending partners. HandLoan.ai is a loan facilitation platform, not a lender. Eligibility, interest rates, charges, approval and disbursement are always decided by the lender.',
     image: 'hero1',
   },
   {
     eyebrow: 'Your digital loan partner',
     title: 'Skip the bank queue. Your digital loan partner is here.',
-    text: 'Transparent, simple and secure — everything a loan application should be. No branch visits, no paperwork piles, no hidden fees from us.',
+    text: 'Start your enquiry online, with no branch visits and no fee from us. Review the lender’s interest rate, fees and repayment schedule in its Key Facts Statement before you decide.',
     image: 'hero2',
   },
 ]
@@ -69,17 +71,17 @@ function Hero() {
                 <Heading className="hero__title">{s.title}</Heading>
                 <p className="hero__text">{s.text}</p>
                 <div className="btn-row">
-                  <a className="btn btn--primary btn--lg" href="/services/" tabIndex={idx === i ? 0 : -1}>
-                    Explore loan options <Icon name="arrowRight" size={18} />
+                  <a className="btn btn--primary btn--lg" href="#enquiry" tabIndex={idx === i ? 0 : -1}>
+                    Start your enquiry <Icon name="arrowRight" size={18} />
                   </a>
                   <a className="btn btn--outline btn--lg" href="/emi-calculator/" tabIndex={idx === i ? 0 : -1}>
                     <Icon name="calculator" size={18} /> Calculate EMI
                   </a>
                 </div>
                 <ul className="hero__ticks">
-                  <li><Icon name="check" size={16} /> RBI-regulated lenders</li>
+                  <li><Icon name="check" size={16} /> Online enquiry</li>
                   <li><Icon name="check" size={16} /> No fee from {site.shortBrand}</li>
-                  <li><Icon name="check" size={16} /> 100% digital</li>
+                  <li><Icon name="check" size={16} /> No PAN or Aadhaar asked</li>
                 </ul>
               </div>
               <div className="hero__media">
@@ -113,10 +115,10 @@ function Hero() {
 
 function Intro() {
   const tags = [
-    ['smartphone', 'Easy-to-use app'],
-    ['file', 'Paperless application'],
-    ['zap', 'Quick lender decisions'],
-    ['eye', 'Clear terms upfront'],
+    ['smartphone', 'Online enquiry'],
+    ['file', 'No paperwork'],
+    ['message', 'Plain-language guidance'],
+    ['eye', 'Honest disclosures'],
   ]
   return (
     <section className="section">
@@ -127,13 +129,13 @@ function Intro() {
         <div>
           <SectionHead eyebrow="Why go digital" title="Skip the bank queue. Your digital loan partner is here." />
           <p>
-            Applying for a loan shouldn&apos;t mean long queues, piles of photocopies and unclear terms. {site.brand}{' '}
-            brings the whole journey online: share your details once, give consent at every step, and receive offers
-            from participating lenders on the Open Network for Digital Commerce (ONDC) and our partner institutions.
+            Exploring a loan shouldn&apos;t mean long queues, piles of photocopies and unclear terms. With {site.brand}{' '}
+            you start with a simple online enquiry, and our team explains loan options, EMIs and charges in plain
+            language.
           </p>
           <p>
-            Every offer shows the lender&apos;s name, the loan amount, interest rate, APR, EMI and all charges, so you
-            can decide with complete clarity.
+            Every offer from a lending partner shows the lender&apos;s name, the loan amount, interest rate, APR, EMI
+            and all charges in its Key Facts Statement, so you can decide with complete clarity.
           </p>
           <ul className="tags">
             {tags.map(([icon, label]) => (
@@ -153,16 +155,16 @@ function Intro() {
 
 function HowItWorks() {
   const steps = [
-    ['smartphone', 'Download & register', `Sign up on the ${site.brand} app with your mobile number.`],
-    ['user', 'Share details with consent', 'Tell us what you need and share the information the lender asks for. You choose what to share at each step.'],
-    ['file', 'Compare offers & read the KFS', "See offers from participating lenders with the lender's name, amount, APR, EMI and all charges."],
-    ['bank', 'Accept & receive funds', 'Sign the agreement digitally. The lender disburses the loan directly to your bank account.'],
+    ['file', 'Send an online enquiry', 'Share your name, contact details and what you need. We do not ask for PAN, Aadhaar, bank details or documents.'],
+    ['user', 'We explain your options', 'Our team contacts you with your consent and explains loan options, EMIs and charges in plain language.'],
+    ['lock', 'Matched with a lending partner', 'With your consent, we share your enquiry with a suitable lending partner listed on our Lending Partners page.'],
+    ['bank', 'The lender decides', 'The lender checks eligibility, shows its Key Facts Statement and decides. Approval is not guaranteed.'],
   ]
   return (
-    <section className="section section--tint">
+    <section className="section section--tint" id="how-it-works">
       <div className="container">
-        <SectionHead center eyebrow="How it works" title="Simple, secure and hassle-free digital loans">
-          A 24×7 digital journey with clear terms at every step, from application to disbursement.
+        <SectionHead center eyebrow="How it works" title="Simple, secure and hassle-free loan enquiry">
+          A digital enquiry with clear information at every step. We are not a lender.
         </SectionHead>
         <ol className="steps">
           {steps.map(([icon, title, text], idx) => (
@@ -196,7 +198,7 @@ function Services() {
     <section className="section">
       <div className="container">
         <SectionHead center eyebrow="Our services" title="Loans for every need">
-          Offered by RBI-regulated banks and NBFCs, facilitated by {site.brand}.
+          Learn about personal and business loans offered by our lending partners. {site.brand} is not a lender.
         </SectionHead>
         <div className="cards cards--2">
           {list.map((p) => (
@@ -208,7 +210,7 @@ function Services() {
                 <dl className="product__facts">
                   <div><dt>Amount</dt><dd>{rupeesShort(p.amountMin)} – {rupeesShort(p.amountMax)}</dd></div>
                   <div><dt>Tenure</dt><dd>{p.tenureMinMonths} – {p.tenureMaxMonths} months</dd></div>
-                  <div><dt>Interest rate</dt><dd>{pct(p.rateMin)} – {pct(p.rateMax)} p.a.</dd></div>
+                  <div><dt>Interest rate</dt><dd>{ratesVerified ? `${pct(p.rateMin)} – ${pct(p.rateMax)} p.a.` : 'Set by lender'}</dd></div>
                 </dl>
                 <a className="btn btn--outline" href={`/services/#${p.key}`}>
                   Read more <Icon name="arrowRight" size={18} />
@@ -226,7 +228,7 @@ function CalculatorBlock() {
   return (
     <section className="section section--tint">
       <div className="container">
-        <SectionHead center eyebrow="EMI calculator" title="Plan your repayments before you apply">
+        <SectionHead center eyebrow="EMI calculator" title="Plan your repayments before you borrow">
           Move the sliders to estimate your monthly EMI and the total interest you would pay.
         </SectionHead>
         <EmiCalculator compact />
@@ -242,12 +244,12 @@ function CalculatorBlock() {
 
 function WhyChoose() {
   const items = [
-    ['zap', 'Fully digital process', 'Skip the bank queue for good. Apply from home at any hour — no branch visits and no physical paperwork.'],
-    ['eye', 'Transparency first', 'No surprises. See the lender’s name, APR, fees and repayment schedule in the KFS before you accept. We never charge borrowers a fee.'],
-    ['layers', 'One application, many lenders', 'Your application can be matched with offers from several participating lenders, so you can compare before you decide.'],
-    ['lock', 'Privacy & consent', 'We collect only what is needed, ask for your consent at each step, and store personal data in India as RBI requires.'],
+    ['zap', 'Fully digital process', 'Skip the bank queue. Start your enquiry from home, with no branch visits and no physical paperwork.'],
+    ['eye', 'Transparency first', 'No surprises. We tell you plainly that we are not a lender and name every lending partner we work with. We never charge you a fee.'],
+    ['layers', 'Plain-language guidance', 'We explain loan types, EMIs, APR and charges in simple words, so you know what to check before you borrow.'],
+    ['lock', 'Privacy & consent', 'We collect only what your enquiry needs and never ask for PAN, Aadhaar, bank details or documents in our enquiry form.'],
     ['heart', 'Real human support', 'We’re your partner, not just a platform. Reach our team by phone, email or WhatsApp, with a clear grievance process.'],
-    ['network', 'Built on open networks', 'Built on the Open Network for Digital Commerce (ONDC) to bring you a wider choice of regulated lenders.'],
+    ['shield', 'Your consent comes first', 'Your enquiry is shared only with a lending partner listed on our website, and only with your consent.'],
   ]
   return (
     <section className="section">
@@ -269,11 +271,11 @@ function WhyChoose() {
 
 function Comparison() {
   const rows = [
-    ['Branch visits and physical paperwork', 'Fully digital application from your phone'],
-    ['Visit lenders one at a time', 'One application, offers from multiple participating lenders'],
-    ['Fees and terms explained late', 'APR, fees and EMI shown in the KFS before you accept'],
-    ['Days or weeks of follow-ups', 'Quick digital decisions by lenders (timelines vary)'],
-    ['One-size-fits-all products', 'Offers based on your profile'],
+    ['Branch visits and physical paperwork', 'A simple online enquiry from your phone'],
+    ['Visit lenders one at a time', 'One enquiry, and our team explains your options'],
+    ['Fees and terms explained late', 'APR, fees and EMI explained in plain language upfront'],
+    ['Days or weeks of follow-ups', 'Updates on your enquiry by call, SMS, WhatsApp or email'],
+    ['Unclear who you are dealing with', 'A clear statement that we are not a lender'],
   ]
   return (
     <section className="section section--tint">
@@ -316,13 +318,13 @@ function Partners() {
   return (
     <section className="section section--tint">
       <div className="container">
-        <SectionHead center eyebrow="Our lending partners" title="Loans from RBI-regulated banks and NBFCs">
-          Your loan is always provided by a regulated lender, named in your offer and KFS.
+        <SectionHead center eyebrow="Lending partners" title="Our lending partners">
+          Loans are offered by these lending partners, which decide on every application. {site.brand} is not a lender.
         </SectionHead>
-        <PartnersList limit={6} />
+        <PartnersList />
         <p className="center mt-2">
           <a className="link-arrow" href="/lending-partners/">
-            View all lending partners and registration details <Icon name="arrowRight" size={16} />
+            View all lending partners <Icon name="arrowRight" size={16} />
           </a>
         </p>
       </div>
@@ -351,6 +353,7 @@ export default function Home() {
     <>
       <Hero />
       <QuickFacts />
+      <EnquirySection />
       <Intro />
       <HowItWorks />
       <Services />

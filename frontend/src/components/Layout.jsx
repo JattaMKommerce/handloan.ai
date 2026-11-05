@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Assistant from './Assistant.jsx'
 import Icon from './Icon.jsx'
 import { site } from '../config/site.js'
-import { YEAR, appExternal, appHref, whatsappHref } from '../lib/derived.js'
+import { PARTNER_LINE, YEAR, appExternal, appHref, appLabel, whatsappHref } from '../lib/derived.js'
 
 const NAV = [
   { href: '/', label: 'Home' },
@@ -87,7 +87,7 @@ function Header({ path }) {
             href={appHref}
             {...(appExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
           >
-            <Icon name="smartphone" size={18} /> Get the App
+            <Icon name="smartphone" size={18} /> {appLabel}
           </a>
         </nav>
         <button
@@ -106,14 +106,15 @@ function Header({ path }) {
 
 function Footer() {
   const c = site.company
+  const g = site.grievance
   return (
     <footer className="footer">
       <div className="container footer__grid">
         <div className="footer__brand">
           <img src="/images/logo.png" alt={site.brand} width="817" height="216" className="footer__logo" />
           <p>
-            {site.brand} is a digital loan facilitation platform operated by {c.legalName}. We help you apply for
-            loans offered by RBI-regulated banks and NBFCs. <strong>We are not a lender.</strong>
+            {site.brand} is a digital loan facilitation platform operated by {c.legalName}.{' '}
+            <strong>We are not a lender.</strong>
           </p>
           <Social />
         </div>
@@ -123,7 +124,9 @@ function Footer() {
           <ul className="footer__links">
             <li><a href="/">Home</a></li>
             <li><a href="/about/">About Us</a></li>
-            <li><a href="/services/">Services</a></li>
+            <li><a href="/#how-it-works">How It Works</a></li>
+            <li><a href="/services/">Loan Products</a></li>
+            <li><a href="/services/#personal-eligibility">Eligibility</a></li>
             <li><a href="/emi-calculator/">EMI Calculator</a></li>
             <li><a href="/faq/">FAQs</a></li>
             <li><a href="/careers/">Careers</a></li>
@@ -144,26 +147,32 @@ function Footer() {
         </div>
 
         <div>
-          <h3 className="footer__title">Get in Touch</h3>
+          <h3 className="footer__title">Company</h3>
           <ul className="footer__contact">
+            <li>
+              <Icon name="building" size={18} />
+              <span>
+                <strong>Legal name:</strong> {c.legalName}
+                <br />
+                <strong>CIN:</strong> {c.cin}
+              </span>
+            </li>
             <li>
               <Icon name="mapPin" size={18} />
               <span>
-                <strong>Registered Office</strong>
-                <br />
-                {c.registeredOffice}
+                <strong>Registered Office:</strong> {c.registeredOffice}
               </span>
             </li>
-            {c.branchOffice ? (
-              <li>
-                <Icon name="building" size={18} />
-                <span>
-                  <strong>Branch Office</strong>
-                  <br />
-                  {c.branchOffice}
-                </span>
-              </li>
-            ) : null}
+            <li>
+              <Icon name="mapPin" size={18} />
+              <span>
+                <strong>Operating office:</strong> {c.operatingOffice}
+              </span>
+            </li>
+            <li>
+              <Icon name="clock" size={18} />
+              <span>{site.contact.hours}</span>
+            </li>
             <li>
               <Icon name="mail" size={18} />
               <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
@@ -178,21 +187,44 @@ function Footer() {
 
       <div className="container footer__legal">
         <p>
-          <strong>Important:</strong> {site.brand} is a brand of {c.legalName} (CIN {c.cin}), which acts as a Lending
-          Service Provider. {site.brand} does not lend money or make credit decisions. All loans are sanctioned and
-          disbursed by our <a href="/lending-partners/">RBI-regulated lending partners</a> at their sole discretion,
-          subject to their credit assessment. Repayment tenures range from 6 to 60 months; we do not offer short-term
-          or payday loans. Interest rates, fees and the Annual Percentage Rate (APR) are set by the lender and shown in
-          the Key Facts Statement before you accept an offer. {site.brand} does not charge borrowers any fee.
+          <strong>Role:</strong> {site.brand} is a brand of {c.legalName} (CIN {c.cin}). It is a loan facilitation
+          platform, not a lender, and does not lend money or make credit decisions. Loans are offered by the lending
+          partners listed on our <a href="/lending-partners/">Lending Partners</a> page, which sanction and disburse
+          them at their sole discretion; each lender&apos;s interest rate, fees and Annual Percentage Rate (APR) are
+          shown in its Key Facts Statement before you accept. Repayment tenures range from 6 to 60 months; we do not offer short-term or payday loans.
+        </p>
+        <p>
+          <strong>No guarantee:</strong> Submitting an enquiry does not guarantee a loan offer, approval or
+          disbursement. {site.brand} does not charge you any fee for submitting an enquiry.
+        </p>
+        <p>
+          <strong>Fraud warning:</strong> Never pay anyone an upfront fee and never share your OTP, UPI PIN, CVV or
+          passwords. {site.brand} never asks for them. Report fraud at{' '}
+          <a href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer">cybercrime.gov.in</a> or call{' '}
+          <strong>1930</strong>.
         </p>
       </div>
 
       <div className="footer__bottom">
         <div className="container footer__bottom-inner">
           <span suppressHydrationWarning>
-            © {YEAR} {c.legalName}. All rights reserved.
+            © {YEAR} {c.legalName}. All Rights Reserved. CIN: {c.cin}
           </span>
-          <span>CIN: {c.cin}</span>
+          <div className="footer__bottom-notes">
+            <p>
+              {site.brand} is a loan facilitation platform, not a lender. Loans are provided by lending institutions
+              (banks and RBI-registered NBFCs).
+            </p>
+            <p>
+              Grievance Officer: {g.name} | Email: <a href={`mailto:${g.email}`}>{g.email}</a> | Phone:{' '}
+              <a href={`tel:${g.phoneHref}`}>{g.phoneDisplay}</a> | Address: {g.address} | Working Hours:{' '}
+              {site.contact.hoursShort}
+            </p>
+            <p>
+              {PARTNER_LINE} Your enquiry is shared with a lender only after you are told which lender and give
+              your consent.
+            </p>
+          </div>
         </div>
       </div>
     </footer>
